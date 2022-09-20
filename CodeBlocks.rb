@@ -62,6 +62,47 @@ call_block_greeting {|name| puts "#{name} says hi"}
 moreanimals = ['lions and', 'tigers and','bears','oh my']
 moreanimals.each{|a| print a, " "}
 
+puts
+('a'..'e').each {|char| print char}
 
+# There are other iterator methods in Ruby, like upto
+puts
+3.upto(6) {|i| print i}
 
+# Code blocks may be returned by functions, but the first they must be converted into Proc objects.
+# Ruby has a function named lambda that converts a function into a Proc object
+def n_times thing
+    lambda {|n| thing * n}
+end
 
+# Call n_times and stores its return in a variable
+# {|n| 23 * n}
+p1 = n_times 23
+puts p1.class 
+
+# To execute the code block contained in p1, use the call statement
+puts p1.call 3
+puts p1.call 4
+
+# Call n_times and store its return in a variable, but give it a different argument
+# {|n| "Hello " * n}
+p2 = n_times "Hello "
+
+puts p2.call 3
+
+# This function contains a do-end code block that will be returned as a Proc object
+def day_of_week 
+    lambda do |today|
+        if today.saturday?
+            'Do chores around the house'
+        elsif today.sunday?
+            'Relax'
+        else
+            'Go to school'
+        end
+    end
+end
+
+# Call day_of_week and store its return in a variable
+d = day_of_week
+puts d.call Time.now
